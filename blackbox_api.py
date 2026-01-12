@@ -46,7 +46,7 @@ def send_to_blackbox(question: str, image_base64: str = None) -> str:
         })
 
     payload = {
-        "model": "gpt-4o",
+        "model": "grok",
         "messages": messages,
         "max_tokens": 1024,
         "temperature": 0.7,
@@ -59,7 +59,10 @@ def send_to_blackbox(question: str, image_base64: str = None) -> str:
             json=payload,
             timeout=60
         )
-        response.raise_for_status()
+
+        if not response.ok:
+            error_detail = response.text[:500] if response.text else "No response body"
+            return f"Error: API returned {response.status_code}. Details: {error_detail}"
 
         data = response.json()
 
@@ -85,5 +88,5 @@ def chat_with_screen(question: str, image_base64: str) -> str:
     Returns:
         AI's analysis/response
     """
-    prompt = f"Look at this screenshot and answer the following question: {question}"
+    prompt = f"Regarde cette capture d'écran et réponds en français à la question suivante: {question}"
     return send_to_blackbox(prompt, image_base64)
