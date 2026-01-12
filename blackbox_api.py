@@ -46,7 +46,7 @@ def send_to_blackbox(question: str, image_base64: str = None) -> str:
         })
 
     payload = {
-        "model": "grok",
+        "model": "x-ai/grok-3-beta",
         "messages": messages,
         "max_tokens": 1024,
         "temperature": 0.7,
