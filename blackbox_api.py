@@ -17,6 +17,7 @@ def send_to_blackbox(question: str, image_base64: str = None) -> str:
         return "Error: BLACKBOX_API_KEY not configured. Please set it in your .env file."
 
     headers = {
+        "Authorization": f"Bearer {BLACKBOX_API_KEY}",
         "Content-Type": "application/json",
     }
 
@@ -45,22 +46,10 @@ def send_to_blackbox(question: str, image_base64: str = None) -> str:
         })
 
     payload = {
+        "model": "gpt-4o",
         "messages": messages,
-        "agentMode": {},
-        "trendingAgentMode": {},
-        "isMicMode": False,
-        "maxTokens": 1024,
-        "playgroundTopP": 0.9,
-        "playgroundTemperature": 0.5,
-        "isChromeExt": False,
-        "githubToken": None,
-        "clickedAnswer2": False,
-        "clickedAnswer3": False,
-        "clickedForceWebSearch": False,
-        "visitFromDelta": False,
-        "mobileClient": False,
-        "userSelectedModel": None,
-        "validated": BLACKBOX_API_KEY,
+        "max_tokens": 1024,
+        "temperature": 0.7,
     }
 
     try:
@@ -72,14 +61,12 @@ def send_to_blackbox(question: str, image_base64: str = None) -> str:
         )
         response.raise_for_status()
 
-        result = response.text
+        data = response.json()
 
-        if result.startswith("$@$"):
-            parts = result.split("$@$")
-            if len(parts) > 2:
-                result = parts[-1]
-
-        return result.strip()
+        if "choices" in data and len(data["choices"]) > 0:
+            return data["choices"][0]["message"]["content"].strip()
+        else:
+            return response.text.strip()
 
     except requests.exceptions.Timeout:
         return "Error: Request timed out. Please try again."

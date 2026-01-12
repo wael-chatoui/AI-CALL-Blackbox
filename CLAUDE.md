@@ -53,3 +53,15 @@ BLACKBOX_API_KEY=your_key_here
 - Screen capture returns base64-encoded PNG
 - Blackbox API expects multimodal messages with image_url type for images
 - Voice input uses Google Speech Recognition (free, no API key needed)
+
+## Git Workflow
+
+After completing each task, commit and push changes to the `dev` branch:
+
+```bash
+git add .
+git commit -m "Description of completed task"
+git push origin dev
+```
+
+Always use the `dev` branch for development work. Do not push directly to `main`.
