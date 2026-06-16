@@ -1,4 +1,9 @@
-# Screen AI Assistant
+# AI-CALL-Blackbox (Screen AI Assistant)
+
+> [!WARNING]  
+> **⚠️ PROJET MIS EN PAUSE / PROJECT PAUSED ⚠️**  
+> Ce projet est actuellement mis en pause et n'est plus activement maintenu.  
+> This project is currently paused and is no longer actively maintained.
 
 A voice-controlled AI assistant that can see your screen and answer questions about it, powered by Blackbox AI.
 
@@ -114,4 +119,3 @@ echo "BLACKBOX_API_KEY=your_key" > .env
 ## License
 
 MIT
-# AI-CALL-Blackbox
